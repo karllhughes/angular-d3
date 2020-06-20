@@ -66,8 +66,8 @@ export class BarComponent implements OnInit {
     .data(data)
     .enter()
     .append("rect")
-    .attr("x", (d) => x(d.Framework))
-    .attr("y", (d) => y(d.Stars))
+    .attr("x", d => x(d.Framework))
+    .attr("y", d => y(d.Stars))
     .attr("width", x.bandwidth())
     .attr("height", (d) => this.height - y(d.Stars))
     .attr("fill", "#d04a35");
