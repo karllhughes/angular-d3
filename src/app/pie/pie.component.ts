@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-interface FrameworkPopularity {
-  "Framework": string;
-  "Stars": string;
-}
+import FrameworkPopularity from '../framework-popularity.interface';
 
 // Adopted from Basic pie chart example on D3 Graph Gallery:
 // https://www.d3-graph-gallery.com/graph/pie_basic.html
@@ -14,11 +11,11 @@ interface FrameworkPopularity {
 })
 export class PieComponent implements OnInit {
   private data = [
-    {"Framework": "Vue", "Stars": "166443"},
-    {"Framework": "React", "Stars": "150793"},
-    {"Framework": "Angular", "Stars": "62342"},
-    {"Framework": "Backbone", "Stars": "27647"},
-    {"Framework": "Ember", "Stars": "21471"},
+    {"Framework": "Vue", "Stars": "166443", "Released": "2014"},
+    {"Framework": "React", "Stars": "150793", "Released": "2013"},
+    {"Framework": "Angular", "Stars": "62342", "Released": "2016"},
+    {"Framework": "Backbone", "Stars": "27647", "Released": "2010"},
+    {"Framework": "Ember", "Stars": "21471", "Released": "2011"},
   ];
   private svg;
   private margin = 50;
@@ -29,7 +26,12 @@ export class PieComponent implements OnInit {
   private colors;
 
   ngOnInit(): void {
-    // Create the SVG on the canvas
+    this.createSvg();
+    this.createColors();
+    this.drawChart();
+  }
+
+  private createSvg(): void {
     this.svg = d3.select("figure#pie")
     .append("svg")
     .attr("width", this.width)
@@ -39,19 +41,15 @@ export class PieComponent implements OnInit {
       "transform",
       "translate(" + this.width / 2 + "," + this.height / 2 + ")"
     );
-
-    this.createColors();
-
-    this.drawChart();
   }
 
-  private createColors() {
+  private createColors(): void {
     this.colors = d3.scaleOrdinal()
     .domain(this.data.map(d => d.Stars.toString()))
     .range(["#c7d3ec", "#a5b8db", "#879cc4", "#677795", "#5a6782"]);
   }
 
-  private drawChart() {
+  private drawChart(): void {
     // Compute the position of each group on the pie:
     const pie = d3.pie<FrameworkPopularity>().value(
       (d: FrameworkPopularity) => Number(d.Stars)

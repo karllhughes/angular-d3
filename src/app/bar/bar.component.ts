@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
+import FrameworkPopularity from '../framework-popularity.interface';
 
 // Adopted from Basic barplot example on D3 Graph Gallery:
 // https://www.d3-graph-gallery.com/graph/barplot_basic.html
@@ -10,11 +11,11 @@ import * as d3 from 'd3';
 })
 export class BarComponent implements OnInit {
   private data = [
-    {"Framework": "Vue", "Stars": "166443"},
-    {"Framework": "React", "Stars": "150793"},
-    {"Framework": "Angular", "Stars": "62342"},
-    {"Framework": "Backbone", "Stars": "27647"},
-    {"Framework": "Ember", "Stars": "21471"},
+    {"Framework": "Vue", "Stars": "166443", "Released": "2014"},
+    {"Framework": "React", "Stars": "150793", "Released": "2013"},
+    {"Framework": "Angular", "Stars": "62342", "Released": "2016"},
+    {"Framework": "Backbone", "Stars": "27647", "Released": "2010"},
+    {"Framework": "Ember", "Stars": "21471", "Released": "2011"},
   ];
   private svg;
   private margin = 50;
@@ -22,13 +23,7 @@ export class BarComponent implements OnInit {
   private height = 400 - (this.margin * 2);
 
   ngOnInit(): void {
-    // Create the SVG on the canvas
-    this.svg = d3.select("figure#bar")
-    .append("svg")
-    .attr("width", this.width + (this.margin * 2))
-    .attr("height", this.height + (this.margin * 2))
-    .append("g")
-    .attr("transform", "translate(" + this.margin + "," + this.margin + ")");
+    this.createSvg();
 
     this.drawBars(this.data);
 
@@ -39,7 +34,16 @@ export class BarComponent implements OnInit {
     // d3.json('https://api.jsonbin.io/b/5eee6a5397cb753b4d149343').then((data: Array<object>) => this.drawBars(data));
   }
 
-  private drawBars(data) {
+  private createSvg(): void {
+    this.svg = d3.select("figure#bar")
+    .append("svg")
+    .attr("width", this.width + (this.margin * 2))
+    .attr("height", this.height + (this.margin * 2))
+    .append("g")
+    .attr("transform", "translate(" + this.margin + "," + this.margin + ")");
+  }
+
+  private drawBars(data: FrameworkPopularity[]): void {
     // Add X axis
     const x = d3.scaleBand()
     .range([0, this.width])
@@ -72,5 +76,4 @@ export class BarComponent implements OnInit {
     .attr("height", (d) => this.height - y(d.Stars))
     .attr("fill", "#d04a35");
   }
-
 }
