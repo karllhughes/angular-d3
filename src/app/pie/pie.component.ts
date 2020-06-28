@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import FrameworkPopularity from '../framework-popularity.interface';
 
 // Adopted from Basic pie chart example on D3 Graph Gallery:
 // https://www.d3-graph-gallery.com/graph/pie_basic.html
@@ -51,9 +50,7 @@ export class PieComponent implements OnInit {
 
   private drawChart(): void {
     // Compute the position of each group on the pie:
-    const pie = d3.pie<FrameworkPopularity>().value(
-      (d: FrameworkPopularity) => Number(d.Stars)
-    );
+    const pie = d3.pie<any>().value((d: any) => Number(d.Stars));
 
     // Build the pie chart
     this.svg

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import FrameworkPopularity from '../framework-popularity.interface';
 
 // Adopted from Basic barplot example on D3 Graph Gallery:
 // https://www.d3-graph-gallery.com/graph/barplot_basic.html
@@ -24,14 +23,13 @@ export class BarComponent implements OnInit {
 
   ngOnInit(): void {
     this.createSvg();
-
     this.drawBars(this.data);
 
     // Parse data from a CSV
-    // d3.csv("/assets/frameworks.csv").then((data: Array<object>) => this.drawBars(data));
+    // d3.csv("/assets/frameworks.csv").then(data => this.drawBars(data));
 
     // Fetch JSON from an external endpoint
-    // d3.json('https://api.jsonbin.io/b/5eee6a5397cb753b4d149343').then((data: Array<object>) => this.drawBars(data));
+    // d3.json('https://api.jsonbin.io/b/5eee6a5397cb753b4d149343').then(data => this.drawBars(data));
   }
 
   private createSvg(): void {
@@ -43,7 +41,7 @@ export class BarComponent implements OnInit {
     .attr("transform", "translate(" + this.margin + "," + this.margin + ")");
   }
 
-  private drawBars(data: FrameworkPopularity[]): void {
+  private drawBars(data: any[]): void {
     // Add X axis
     const x = d3.scaleBand()
     .range([0, this.width])
