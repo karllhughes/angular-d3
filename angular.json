@@ -98,28 +98,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-d3:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "angular-d3:serve:production"
-            }
           }
         }
       }
@@ -127,6 +111,7 @@
   },
   "defaultProject": "angular-d3",
   "cli": {
-    "analytics": "e8e17021-beea-4664-9b81-069ca1a1a3d3"
+    "analytics": "e8e17021-beea-4664-9b81-069ca1a1a3d3",
+    "defaultCollection": "@angular-eslint/schematics"
   }
 }
